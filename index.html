@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>짠당티엔 | 기계 엔지니어 포트폴리오</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --red: #e53935;
+    --orange: #f57c00;
+    --navy: #0d1b2a;
+    --navy2: #1b2838;
+    --navy3: #243447;
+    --white: #ffffff;
+    --gray: #b0bec5;
+    --light: #eceff1;
+    --accent: #ff6f00;
+    --gradient: linear-gradient(135deg, #e53935, #f57c00);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Noto Sans KR', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy2); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(13, 27, 42, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(229,57,53,0.2);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 2px; background: var(--gradient);
+    transform: scaleX(0); transition: transform 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 6rem 2.5rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 600px 500px at 80% 50%, rgba(229,57,53,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 400px 400px at 10% 80%, rgba(245,124,0,0.06) 0%, transparent 70%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; max-width: 700px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(229,57,53,0.12);
+    border: 1px solid rgba(229,57,53,0.3);
+    padding: 6px 16px; border-radius: 20px;
+    font-size: 0.78rem; color: #ef9f27; font-weight: 500;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.6s ease both;
+  }
+  .hero-badge i { font-size: 12px; }
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    animation: fadeInUp 0.6s 0.1s ease both;
+  }
+  .hero-name .line1 { color: var(--white); display: block; }
+  .hero-name .line2 {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+  }
+  .hero-sub {
+    font-size: 1rem; color: var(--gray); margin-top: 1.2rem;
+    line-height: 1.7;
+    animation: fadeInUp 0.6s 0.2s ease both;
+  }
+  .hero-sub strong { color: var(--white); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 2.5rem;
+    animation: fadeInUp 0.6s 0.3s ease both;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--gray); margin-top: 2px; }
+  .hero-btns {
+    display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+    animation: fadeInUp 0.6s 0.4s ease both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gradient);
+    color: var(--white);
+    padding: 12px 28px; border-radius: 8px;
+    font-size: 0.88rem; font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(229,57,53,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(229,57,53,0.5); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: var(--white);
+    padding: 12px 28px; border-radius: 8px;
+    font-size: 0.88rem; font-weight: 500;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--red); background: rgba(229,57,53,0.08); }
+  .hero-social {
+    display: flex; gap: 1rem; margin-top: 2rem;
+    animation: fadeInUp 0.6s 0.5s ease both;
+  }
+  .social-link {
+    width: 40px; height: 40px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+  .social-link:hover { background: var(--red); border-color: var(--red); color: #fff; transform: translateY(-2px); }
+  .hero-right {
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    animation: fadeInRight 0.8s 0.3s ease both;
+  }
+  .avatar-big {
+    width: 220px; height: 220px; border-radius: 50%;
+    background: var(--gradient);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem; color: #fff;
+    position: relative;
+    box-shadow: 0 0 60px rgba(229,57,53,0.3);
+  }
+  .avatar-big::before {
+    content: '';
+    position: absolute; inset: -8px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background: var(--gradient) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    animation: spin 6s linear infinite;
+  }
+  .avatar-ring {
+    position: absolute; inset: -20px;
+    border-radius: 50%;
+    border: 1px solid rgba(229,57,53,0.2);
+    animation: spin 10s linear infinite reverse;
+  }
+  .float-tag {
+    position: absolute;
+    background: var(--navy2);
+    border: 1px solid rgba(229,57,53,0.3);
+    padding: 8px 14px; border-radius: 8px;
+    font-size: 0.75rem; font-weight: 500;
+    white-space: nowrap;
+  }
+  .float-tag.t1 { top: -10px; right: -30px; }
+  .float-tag.t2 { bottom: 10px; left: -40px; }
+  .float-tag.t3 { top: 50%; right: -50px; transform: translateY(-50%); }
+
+  /* ── SECTION BASE ── */
+  section { padding: 5rem 2.5rem; }
+  .section-label {
+    font-size: 0.75rem; letter-spacing: 3px; font-weight: 700;
+    color: var(--red); text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: 1px; line-height: 1;
+    margin-bottom: 3rem;
+  }
+  .section-title span {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .max-w { max-width: 1100px; margin: 0 auto; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--navy2); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .about-text p { color: var(--gray); line-height: 1.9; font-size: 0.95rem; margin-bottom: 1rem; }
+  .about-text p strong { color: var(--white); }
+  .info-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 10px; }
+  .info-row {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 0.88rem;
+  }
+  .info-row i { color: var(--red); width: 18px; text-align: center; }
+  .info-row .ik { color: var(--gray); min-width: 80px; }
+  .info-row .iv { color: var(--white); }
+  .lang-cards { display: flex; flex-direction: column; gap: 14px; }
+  .lang-card {
+    background: var(--navy3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+  }
+  .lang-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .lang-name-big { font-weight: 700; font-size: 0.95rem; }
+  .lang-badge {
+    font-size: 0.72rem; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .lang-badge.native { background: rgba(229,57,53,0.15); color: #ef9f27; }
+  .lang-badge.adv { background: rgba(229,57,53,0.15); color: var(--red); }
+  .lang-badge.basic { background: rgba(176,190,197,0.1); color: var(--gray); }
+  .lang-bar-bg { height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+  .lang-bar-fill { height: 100%; border-radius: 3px; background: var(--gradient); transition: width 1s ease; }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--navy); }
+  .skills-cats { display: flex; flex-direction: column; gap: 2.5rem; }
+  .skill-cat-title {
+    font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gray); margin-bottom: 1rem; font-weight: 600;
+  }
+  .skill-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 16px; border-radius: 8px;
+    font-size: 0.83rem; font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: var(--navy2);
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .chip:hover { border-color: var(--red); background: rgba(229,57,53,0.08); transform: translateY(-2px); }
+  .chip i { color: var(--red); font-size: 0.9rem; }
+  .chip.highlight { border-color: rgba(229,57,53,0.4); }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--navy2); }
+  .exp-timeline { position: relative; padding-left: 2rem; }
+  .exp-timeline::before {
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--red), transparent);
+  }
+  .exp-item { position: relative; margin-bottom: 2.5rem; }
+  .exp-dot {
+    position: absolute; left: -2.45rem; top: 6px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--gradient);
+    border: 2px solid var(--navy2);
+  }
+  .exp-card-full {
+    background: var(--navy3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-left: 3px solid var(--red);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 0.8rem; }
+  .exp-co { font-size: 1.05rem; font-weight: 700; color: var(--white); }
+  .exp-co-sub { font-size: 0.82rem; color: var(--red); font-weight: 500; margin-top: 3px; }
+  .exp-period-badge {
+    background: rgba(229,57,53,0.1);
+    border: 1px solid rgba(229,57,53,0.25);
+    color: var(--orange);
+    font-size: 0.75rem; font-weight: 600;
+    padding: 4px 12px; border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+  .exp-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.8; margin-bottom: 1rem; }
+  .exp-desc li { margin-bottom: 4px; }
+  .exp-desc ul { padding-left: 1.2rem; }
+  .exp-tech { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tech-tag {
+    font-size: 0.75rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .tech-tag.blue { background: rgba(33,150,243,0.1); color: #64b5f6; }
+  .tech-tag.red { background: rgba(229,57,53,0.1); color: #ef9a9a; }
+  .tech-tag.green { background: rgba(76,175,80,0.1); color: #81c784; }
+  .tech-tag.orange { background: rgba(255,152,0,0.1); color: #ffb74d; }
+
+  /* ── EDUCATION ── */
+  #education { background: var(--navy); }
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .edu-card {
+    background: var(--navy2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .edu-card:hover { border-color: rgba(229,57,53,0.4); transform: translateY(-3px); }
+  .edu-icon {
+    width: 44px; height: 44px;
+    background: rgba(229,57,53,0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--red); font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .edu-name { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+  .edu-detail { font-size: 0.82rem; color: var(--gray); line-height: 1.7; }
+  .edu-period { font-size: 0.75rem; color: var(--orange); font-weight: 600; margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
+  .courses-box {
+    background: var(--navy2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .courses-title { font-size: 0.82rem; font-weight: 700; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem; }
+  .course-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .course-chip {
+    font-size: 0.78rem; padding: 4px 12px;
+    border-radius: 6px; font-weight: 600;
+    background: rgba(229,57,53,0.08);
+    border: 1px solid rgba(229,57,53,0.2);
+    color: #ef9a9a;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--navy2); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .contact-info { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-card {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--navy3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .contact-card:hover { border-color: var(--red); transform: translateX(4px); }
+  .contact-card-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .contact-card-icon.red { background: rgba(229,57,53,0.15); color: var(--red); }
+  .contact-card-icon.blue { background: rgba(0,119,181,0.15); color: #0077b5; }
+  .contact-card-icon.dark { background: rgba(36,41,46,0.5); color: var(--white); border: 1px solid rgba(255,255,255,0.1); }
+  .contact-card-text .ct { font-size: 0.75rem; color: var(--gray); }
+  .contact-card-text .cv { font-size: 0.88rem; color: var(--white); font-weight: 500; margin-top: 2px; }
+  .contact-cta { text-align: center; }
+  .cta-box {
+    background: linear-gradient(135deg, rgba(229,57,53,0.1), rgba(245,124,0,0.1));
+    border: 1px solid rgba(229,57,53,0.25);
+    border-radius: 16px;
+    padding: 2.5rem;
+  }
+  .cta-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 1px; margin-bottom: 0.8rem; }
+  .cta-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.7; margin-bottom: 1.5rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 1.5rem 2.5rem;
+    text-align: center;
+    font-size: 0.78rem; color: var(--gray);
+  }
+  footer span { color: var(--red); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translate(30px, -50%); }
+    to { opacity: 1; transform: translate(0, -50%); }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+    .hero { padding: 5rem 1.2rem 3rem; }
+    .hero-right { display: none; }
+    section { padding: 3.5rem 1.2rem; }
+    .about-grid, .edu-grid, .contact-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">TDT</div>
+  <ul class="nav-links">
+    <li><a href="#about">소개</a></li>
+    <li><a href="#skills">기술</a></li>
+    <li><a href="#experience">경력</a></li>
+    <li><a href="#education">학력</a></li>
+    <li><a href="#contact">연락처</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <i class="fa-solid fa-circle" style="color:#4caf50;font-size:8px"></i>
+      현재 재직 중 · 미래엔지니어링
+    </div>
+    <h1 class="hero-name">
+      <span class="line1">TRAN DANG</span>
+      <span class="line2">TIEN</span>
+    </h1>
+    <p class="hero-sub">
+      <strong>기계 엔지니어 & 프로젝트 매니저</strong><br>
+      인하대학교 기계공학과 졸업 · 베트남 출신 · 한국 거주<br>
+      산업 수처리 플랜트 전문 · TOPIK 6급
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">1+</div>
+        <div class="stat-label">년 경력</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">개국어</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">수처리 공정</div>
+      </div>
+    </div>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">
+        <i class="fa-solid fa-paper-plane"></i> 연락하기
+      </a>
+      <a href="#experience" class="btn-secondary">
+        <i class="fa-solid fa-briefcase"></i> 경력 보기
+      </a>
+    </div>
+    <div class="hero-social">
+      <a href="mailto:trandangtien10b1@gmail.com" class="social-link" title="Email">
+        <i class="fa-solid fa-envelope"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/tien-tran-dang-1a2358271/" target="_blank" class="social-link" title="LinkedIn">
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+      <a href="https://github.com/TRANDANGTIEN99" target="_blank" class="social-link" title="GitHub">
+        <i class="fa-brands fa-github"></i>
+      </a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="avatar-big">
+      TĐT
+      <div class="avatar-ring"></div>
+    </div>
+    <div class="float-tag t1">🎓 인하대학교</div>
+    <div class="float-tag t2">🇻🇳 베트남 출신</div>
+    <div class="float-tag t3">TOPIK 6급</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="max-w">
+    <div class="section-label">About</div>
+    <div class="section-title">저에 대해 <span>소개합니다</span></div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>안녕하세요! 저는 <strong>베트남 출신 기계공학 엔지니어 짠당티엔</strong>입니다. 인하대학교 기계공학과를 졸업하고 현재 수처리 플랜트 전문기업인 미래엔지니어링에서 근무하고 있습니다.</p>
+        <p>RO, UF, EDI, MDG 등 산업용 수처리 설비에 관한 실무 경험을 쌓고 있으며, 현장 파견 3개월을 포함한 다양한 프로젝트에 참여했습니다.</p>
+        <p>기술력과 함께 <strong>한국어(TOPIK 6급)</strong>로 원활한 의사소통이 가능하며, Python과 AI를 활용한 업무 자동화에도 관심이 많습니다.</p>
+        <div class="info-list">
+          <div class="info-row"><i class="fa-solid fa-user"></i><span class="ik">이름</span><span class="iv">짠당티엔 (Trần Đăng Tiến)</span></div>
+          <div class="info-row"><i class="fa-solid fa-cake-candles"></i><span class="ik">생년월일</span><span class="iv">1999년 8월 5일</span></div>
+          <div class="info-row"><i class="fa-solid fa-flag"></i><span class="ik">국적</span><span class="iv">베트남</span></div>
+          <div class="info-row"><i class="fa-solid fa-map-pin"></i><span class="ik">거주지</span><span class="iv">대한민국</span></div>
+          <div class="info-row"><i class="fa-solid fa-envelope"></i><span class="ik">이메일</span><span class="iv">trandangtien10b1@gmail.com</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="lang-cards">
+          <div class="lang-card">
+            <div class="lang-top-row">
+              <span class="lang-name-big">🇻🇳 베트남어</span>
+              <span class="lang-badge native">모국어</span>
+            </div>
+            <div class="lang-bar-bg"><div class="lang-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="lang-card">
+            <div class="lang-top-row">
+              <span class="lang-name-big">🇰🇷 한국어</span>
+              <span class="lang-badge adv">TOPIK 6급</span>
+            </div>
+            <div class="lang-bar-bg"><div class="lang-bar-fill" style="width:95%"></div></div>
+          </div>
+          <div class="lang-card">
+            <div class="lang-top-row">
+              <span class="lang-name-big">🇬🇧 영어</span>
+              <span class="lang-badge basic">기초</span>
+            </div>
+            <div class="lang-bar-bg"><div class="lang-bar-fill" style="width:30%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="max-w">
+    <div class="section-label">Skills</div>
+    <div class="section-title">기술 <span>스택</span></div>
+    <div class="skills-cats reveal">
+      <div>
+        <div class="skill-cat-title">⚙️ 기계 / 엔지니어링</div>
+        <div class="skill-chips">
+          <div class="chip highlight"><i class="fa-solid fa-drafting-compass"></i> AutoCAD</div>
+          <div class="chip highlight"><i class="fa-solid fa-vector-square"></i> CADian</div>
+          <div class="chip"><i class="fa-solid fa-water"></i> RO (역삼투)</div>
+          <div class="chip"><i class="fa-solid fa-filter"></i> UF (한외여과)</div>
+          <div class="chip"><i class="fa-solid fa-bolt"></i> EDI (전기탈이온)</div>
+          <div class="chip"><i class="fa-solid fa-wind"></i> MDG (탈기막)</div>
+          <div class="chip"><i class="fa-solid fa-list-check"></i> BOM 작성</div>
+          <div class="chip"><i class="fa-solid fa-file-lines"></i> 도면 검토</div>
+          <div class="chip"><i class="fa-solid fa-hard-hat"></i> 현장 안전관리</div>
+          <div class="chip"><i class="fa-solid fa-boxes-stacking"></i> 기자재 발주·구매</div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-cat-title">💻 소프트웨어 / 개발</div>
+        <div class="skill-chips">
+          <div class="chip highlight"><i class="fa-brands fa-python"></i> Python</div>
+          <div class="chip"><i class="fa-solid fa-chart-bar"></i> Streamlit</div>
+          <div class="chip"><i class="fa-brands fa-java"></i> Java</div>
+          <div class="chip"><i class="fa-solid fa-leaf"></i> Spring Boot</div>
+          <div class="chip"><i class="fa-solid fa-table"></i> Microsoft Excel</div>
+          <div class="chip"><i class="fa-solid fa-file-word"></i> Microsoft Word</div>
+          <div class="chip"><i class="fa-brands fa-github"></i> Git / GitHub</div>
+          <div class="chip"><i class="fa-solid fa-robot"></i> AI 업무 자동화</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="max-w">
+    <div class="section-label">Experience</div>
+    <div class="section-title">경력 <span>사항</span></div>
+    <div class="exp-timeline reveal">
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-card-full">
+          <div class="exp-header">
+            <div>
+              <div class="exp-co">미래엔지니어링 (Meerae Engineering)</div>
+              <div class="exp-co-sub">기계 엔지니어 · 프로젝트 매니저 | 산업 수처리 플랜트</div>
+            </div>
+            <span class="exp-period-badge">2025.02 → 현재</span>
+          </div>
+          <div class="exp-desc">
+            <ul>
+              <li>RO · UF · EDI · MDG 수처리 설비 기자재 구매 및 발주 관리</li>
+              <li>BOM(Bill of Materials) 작성 및 도면 검토·평가</li>
+              <li>협력업체 견적 요청·비교 및 계약 지원</li>
+              <li>현장 파견 3개월: Kleannara 프로젝트 시공 품질·안전관리</li>
+              <li>베트남 팀과의 기술 커뮤니케이션 담당</li>
+              <li>Python · AI 기반 업무 프로세스 자동화 적용</li>
+            </ul>
+          </div>
+          <div class="exp-tech">
+            <span class="tech-tag blue">RO / UF / EDI / MDG</span>
+            <span class="tech-tag red">BOM</span>
+            <span class="tech-tag green">AutoCAD</span>
+            <span class="tech-tag orange">Python</span>
+            <span class="tech-tag blue">CADian</span>
+            <span class="tech-tag green">현장관리</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-card-full">
+          <div class="exp-header">
+            <div>
+              <div class="exp-co">K-Tech College 교육 이수</div>
+              <div class="exp-co-sub">Java 백엔드 개발 | 중소벤처기업진흥공단</div>
+            </div>
+            <span class="exp-period-badge">2024.06 → 2024.11</span>
+          </div>
+          <div class="exp-desc">
+            <ul>
+              <li>Java Spring Boot 기반 백엔드 개발 실무교육 총 800시간 이수</li>
+              <li>JPA · RESTful API · Spring Security · Docker 학습</li>
+              <li>팀 프로젝트 및 해커톤 참여</li>
+            </ul>
+          </div>
+          <div class="exp-tech">
+            <span class="tech-tag blue">Java</span>
+            <span class="tech-tag green">Spring Boot</span>
+            <span class="tech-tag orange">JPA</span>
+            <span class="tech-tag red">RESTful API</span>
+            <span class="tech-tag blue">Docker</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-card-full">
+          <div class="exp-header">
+            <div>
+              <div class="exp-co">사랑의 연탄 나눔 봉사활동</div>
+              <div class="exp-co-sub">사회봉사 | 인하대학교</div>
+            </div>
+            <span class="exp-period-badge">인하대 재학 중</span>
+          </div>
+          <div class="exp-desc">
+            인천 지역 저소득 가정에 연탄 배달 및 나눔 봉사 참여. 팀워크와 지역 사회 기여 경험.
+          </div>
+          <div class="exp-tech">
+            <span class="tech-tag green">팀워크</span>
+            <span class="tech-tag blue">사회공헌</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="max-w">
+    <div class="section-label">Education</div>
+    <div class="section-title">학력 <span>사항</span></div>
+    <div class="edu-grid reveal">
+      <div class="edu-card">
+        <div class="edu-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="edu-name">인하대학교 (Inha University)</div>
+        <div class="edu-detail">기계공학과 (Mechanical Engineering)<br>인천광역시 소재 국내 명문 공과대학</div>
+        <div class="edu-period">졸업 · 2023년 8월</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon"><i class="fa-solid fa-certificate"></i></div>
+        <div class="edu-name">취득 예정 자격증</div>
+        <div class="edu-detail">
+          정밀측정 산업기사 (준비 중)<br>
+          산업안전기사 (준비 중)
+        </div>
+        <div class="edu-period">준비 중</div>
+      </div>
+    </div>
+    <div class="courses-box reveal" style="margin-top:1.5rem">
+      <div class="courses-title">📚 주요 이수 전공과목</div>
+      <div class="course-chips">
+        <span class="course-chip">열전달</span>
+        <span class="course-chip">열역학</span>
+        <span class="course-chip">유체역학</span>
+        <span class="course-chip">재료역학</span>
+        <span class="course-chip">기계설계</span>
+        <span class="course-chip">동역학</span>
+        <span class="course-chip">제어공학</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="max-w">
+    <div class="section-label">Contact</div>
+    <div class="section-title">연락처 <span>안내</span></div>
+    <div class="contact-grid reveal">
+      <div class="contact-info">
+        <a href="mailto:trandangtien10b1@gmail.com" class="contact-card">
+          <div class="contact-card-icon red"><i class="fa-solid fa-envelope"></i></div>
+          <div class="contact-card-text">
+            <div class="ct">이메일</div>
+            <div class="cv">trandangtien10b1@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/tien-tran-dang-1a2358271/" target="_blank" class="contact-card">
+          <div class="contact-card-icon blue"><i class="fa-brands fa-linkedin-in"></i></div>
+          <div class="contact-card-text">
+            <div class="ct">LinkedIn</div>
+            <div class="cv">tien-tran-dang-1a2358271</div>
+          </div>
+        </a>
+        <a href="https://github.com/TRANDANGTIEN99" target="_blank" class="contact-card">
+          <div class="contact-card-icon dark"><i class="fa-brands fa-github"></i></div>
+          <div class="contact-card-text">
+            <div class="ct">GitHub</div>
+            <div class="cv">TRANDANGTIEN99</div>
+          </div>
+        </a>
+      </div>
+      <div class="contact-cta">
+        <div class="cta-box">
+          <div class="cta-title">함께 일해요!</div>
+          <p class="cta-desc">기계 엔지니어링, 수처리 플랜트, 또는 프로젝트 협업에 관심이 있으시면 언제든지 연락 주세요.</p>
+          <a href="mailto:trandangtien10b1@gmail.com" class="btn-primary" style="display:inline-flex">
+            <i class="fa-solid fa-paper-plane"></i> 메일 보내기
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Trần Đăng Tiến (짠당티엔) · Made with <span>♥</span> in Korea</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
